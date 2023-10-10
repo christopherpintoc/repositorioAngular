@@ -1,0 +1,18 @@
+<section>
+  <ng-template #content let-offcanvas>
+    <div class="offcanvas-header">
+      <a class="nav-link" routerLink="/home"><img class="SodexoLogoSidebar" src="/assets/imagenes/sodexo_logo.png"
+                                                  (click)="offcanvas.close('Close click')" alt="SodexoLogo"></a>
+      <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+    </div>
+
+    <div class="offcanvas-body">
+      <a class="nav-link hover-effect" routerLink="/home" (click)="offcanvas.close('Close click')" aria-current="page"
+         href="#">Home</a>
+      <br>
+      <a class="nav-link hover-effect" routerLink="/favoritos" (click)="offcanvas.close('Close click')"
+         href="#">Favoritos</a>
+      <br>
+    </div>
+  </ng-template>
+</section>
