@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ArticleList, Noticia, Result } from '../interfaces/noticias.inteface';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { ArticleList, Noticia } from '../interfaces/noticias.inteface';
+import { Favoritos, NoticiasResponse } from '../interfaces/favoritos.interface';
 import { Observable, catchError, map, of } from 'rxjs';
 
 @Injectable({
@@ -27,19 +28,20 @@ export class NoticiasServices {
   }
 
   //obtiene todos los favoritos desde backend
-  public getFavoritos(): Observable<Noticia | undefined> {
-    return this.http.get<Noticia>(`${this.urlObtenerFavoritos}`)
+  public getFavoritos(): Observable<Favoritos> {
+    return this.http.get<Favoritos>(`${this.urlObtenerFavoritos}`)
     .pipe(
-      catchError( error => of(undefined))
+      map (resp => resp)
     );
   }
 
   //obtiene favortitos por titulo desde backend
-  public getFavoritosPorTitulo(title: string) :Observable<Noticia|undefined>{
-    return this.http.get<Noticia>(`${this.urlBuscarFavoritosPorTitulo}` + `/${title}`)
-    .pipe(
-      catchError( error => of(undefined))
+  public getFavoritosPorTitulo(title: string) :Observable<Favoritos>{
+    const headers = new HttpParams().append(
+      'Content-Type',
+      'application/x-www-form-urlencoded'
     );
+    return this.http.get<Favoritos>(`${this.urlBuscarFavoritosPorTitulo}` + `/${title}`);
   }
 
   //guarda favoritos hacia el backend
@@ -47,20 +49,15 @@ export class NoticiasServices {
     return this.http.post<Noticia>(`${ this.urlGuardarFavorito }`, noticia);
   }
 
+  //borra favoritos desde backend
+  public borrarFavorito(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.urlBorrarFavoritos}/${id}`);
+  }
+
   //actualiza favoritos hacia el backend
   public actualizarFavoritos(noticia: Noticia): Observable<Noticia>{
     if (!noticia.id) throw Error('Id es requerido');
     return this.http.patch<Noticia>(`${this.urlActualizarFavorito}` + `/${noticia.id}`, noticia);
   }
-
-  //borra favoritos desde backend
-  public borrarFavorito(id: number): Observable<boolean> {
-    return this.http.delete(`${this.urlBorrarFavoritos}${id}`)
-    .pipe(
-      catchError(err => of(false)),
-      map(resp => true)
-    );
-  }
-
 
 }

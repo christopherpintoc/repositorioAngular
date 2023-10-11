@@ -15,6 +15,7 @@ import { PaginatorIntl } from './services/paginatorIntl.service';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FiltroPipe } from './home/pipes/filtro.pipe';
+import { FiltroFavoritosPipe } from './home/pipes/filtro-favoritos.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FiltroPipe } from './home/pipes/filtro.pipe';
     HomeComponent,
     FavoritosComponent,
     SidenavComponent,
-    FiltroPipe
+    FiltroPipe,
+    FiltroFavoritosPipe
   ],
   imports: [
     FormsModule,

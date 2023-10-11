@@ -1,1 +1,67 @@
-<p>favoritos works!</p>
+<div class="container mt-5 mb-5">
+  <br>
+  <table>
+    <tr>
+      <td>
+        <input type="text"
+        class="form-control mb-2"
+        placeholder="Search Article"
+        #txtSearch
+        (keyup)="searchArticle(txtSearch.value)"/>
+      </td>
+      &nbsp;
+      <td>
+        <button class="btn btn-primary"
+        (click)="prevPage()">
+          Previous
+        </button>
+        &nbsp;
+      </td>
+      <td>
+        <button class="btn btn-primary"
+        (click)="nextPage()"
+        [disabled]="(favoritosList.noticiasResponse.noticias | filtroFavoritos:page:search).length === 0 ">
+          Next
+        </button>
+        &nbsp;
+      </td>
+      &nbsp;
+      &nbsp;
+      <td>
+        <a [routerLink]="['/home']" class="btn btn-primary">Home</a>
+        &nbsp;
+        <a [routerLink]="['/favoritos']" class="btn btn-primary">Favorites</a>
+      </td>
+      &nbsp;
+      &nbsp;
+      <td>
+        <input type="text"
+        [(ngModel)]="tituloBusqueda"
+        placeholder="Saved article by title">
+        <button class="btn btn-primary" (click)="getFavoritosPorTitulo(tituloBusqueda)">Search</button>
+      </td>
+      &nbsp;
+    </tr>
+  </table>
+  <h2 style="font-family: Arial, Helvetica, sans-serif;">Favorites</h2>
+  <div *ngIf="showFavoritos">
+    <div *ngFor="let favorito of favoritosPorTitulo.noticiasResponse.noticias">
+      <p>{{favorito.title}}</p>
+      <p>Saved date: {{ favorito.updated_at | date: 'dd MMM yyyy'}}</p>
+    </div>
+  </div>
+  <div *ngFor="let favorito of favoritosList.noticiasResponse.noticias | filtroFavoritos:page:search">
+    <div class="card" style="width: min-content; align-content: center;">
+      <div class="card-body">
+        <img [src]="favorito.image_url" width="600" height="400" alt="Imagen">
+        <h5 class="card-title"><b style="font-size: medium;">{{favorito.title}}</b></h5>
+        <p class="card-text">{{favorito.summary}}</p>
+        <p class="card-text">Site: {{favorito.news_site}}</p>
+        <p class="card-text">Saved at: {{favorito.updated_at | date: 'dd MMM yyyy'}}</p>
+        <button  class="btn btn-primary" (click)="borrarFavorito(favorito)">Delete FF</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--{{favoritosList.noticiasResponse.noticias | json }}-->

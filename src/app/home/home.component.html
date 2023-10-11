@@ -27,25 +27,29 @@
         </button>
         &nbsp;
       </td>
+      &nbsp;
+      &nbsp;
+      <td>
+        <a [routerLink]="['/home']" class="btn btn-primary">Home</a>
+        &nbsp;
+        <a [routerLink]="['/favoritos']" class="btn btn-primary">Favorites</a>
+      </td>
     </tr>
   </table>
-
-  <form class="grid" [formGroup]="favoritos" (ngSubmit)="agregarFavoritos()">
-    <div class="card">
-      <div class="card-header">
-      </div>
-        <div class="card-body" *ngFor="let item of resultado | filtro:page:search">
-                                  <img [src]="item.image_url" formControlName="image_url"  width="600" height="300" name="image_url" placeholder="image_url">
-                                  <h5 class="card-title"  formControlName="title" name="title" placeholder="title"><b>{{item.title}}</b></h5>
-                        Summary:  <p class="card-text"  formControlName="summary" name="summary" placeholder="summary">{{item.summary}} </p>
-                           Site:  <p class="card-text"   formControlName="news_site" name="news_site" placeholder="news_site">{{item.news_site}} </p>
-                 Published date:  <p class="card-text"  formControlName="published_at" name="published_at" placeholder="published_at">{{item.published_at  | date: 'dd MMM yyyy'}} </p>
-                <!--<button type="submit" (click)="agregarFavoritos()" class="btn btn-primary">Add to FF</button>-->
-                <button type="submit"class="btn btn-primary">Add to FF</button>
+  <h2 style="font-family: Arial, Helvetica, sans-serif;">Home</h2>
+  <div *ngFor="let item of resultado | filtro:page:search">
+    <div class="card" style="width: min-content; align-content: center;" >
+      <div class="card-body">
+        <img [src]="item.image_url" width="600" height="400" name="image_url" placeholder="image_url">
+        <h5 class="card-title"><b style="font-size: medium;">{{item.title}}</b></h5>
+        <p class="card-text">Summary: {{item.summary}} </p>
+        <p class="card-text">Site: {{item.news_site}} </p>
+        <p class="card-text">Published date: {{item.published_at  | date: 'dd MMM yyyy'}} </p>
+        <button  class="btn btn-primary" (click)="agregarFavoritos(item)">Add to FF</button>
+        &nbsp;
       </div>
     </div>
-  </form>
-  {{ getResultadosToAdd | json }}
-
-
+  </div>
 </div>
+
+

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ArticleList, Result } from 'src/app/interfaces/noticias.inteface';
+import { Result } from 'src/app/interfaces/noticias.inteface';
 
 @Pipe({
   name: 'filtro'
