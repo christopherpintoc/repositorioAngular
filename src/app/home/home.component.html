@@ -1,0 +1,69 @@
+<div class="container mt-5 mb-5">
+  &nbsp;
+  <nav mat-tab-nav-bar backgroundColor="primary" mat-align-tabs="center">
+    <a mat-tab-link *ngFor="let link of links; index as i"
+       [href]="link"
+       (click)="activeLink = link"
+       [active]="activeLink == link"> {{titles[i]}} </a>
+  </nav>
+  &nbsp;
+  <div class="card" style="width:auto; align-content: center; background-color: rgb(182, 236, 239);">
+  <table>
+    <tr>
+      <td>
+        <button  class="btn btn-primary mx-1"
+        (click)="goToPage(currentPage - 1)"
+        [disabled]="currentPage === 1">
+          Previous
+        </button>
+        &nbsp;
+      </td>
+      <td>
+        <button class="btn btn-primary  mx-1"
+        (click)="goToPage(currentPage + 1)"
+        [disabled]="(resultado | filtro:search).length === 0">
+          Next
+        </button>
+      </td>
+      &nbsp;
+      <td>
+        <input type="text"
+        class="form-control mb-2"
+        placeholder="Search Article"
+        #txtSearch
+        (keyup)="searchArticle(txtSearch.value)"/>
+      </td>
+      &nbsp;
+      &nbsp;
+      <!-- <td>
+        <a [routerLink]="['/home']" class="btn btn-primary  mx-1">Home</a>
+        &nbsp;
+        <a [routerLink]="['/favoritos']" class="btn btn-primary  mx-1">Favorites</a>
+      </td> -->
+    </tr>
+  </table>
+  </div>
+  <table>
+    <tr>
+      <td><h2 style="font-family: Arial, Helvetica, sans-serif;">Home</h2></td>
+      <td ><h2 style="font-family: Arial, Helvetica, sans-serif;"> - Page: {{currentPage}}</h2> </td>
+    </tr>
+  </table>
+
+  <!--<div *ngFor="let article of articles | filtro:page:search" align="center">-->
+    <div *ngFor="let article of resultado | filtro:search">
+    <div class="card" style="width: min-content; align-items: center;">
+        <div class="card-body"  >
+          <img [src]="article.imageUrl" width="600" height="400" name="imageUrl" placeholder="imageUrl">
+          <h5 class="card-title"><b style="font-size: medium;">{{article.title}}</b></h5>
+          <p class="card-text">Summary: {{article.summary}} </p>
+          <p class="card-text">Site: {{article.newsSite}} </p>
+          <p class="card-text">Published date: {{article.publishedAt  | date: 'dd MMM yyyy'}} </p>
+          <button  class="btn btn-primary  mx-1" (click)="agregarFavoritos(article)">Add to FF</button>
+          &nbsp;
+        </div>
+    </div>
+  </div>
+</div>
+
+

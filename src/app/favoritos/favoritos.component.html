@@ -1,0 +1,83 @@
+<div class="container mt-5 mb-5">
+  &nbsp;
+  <nav mat-tab-nav-bar backgroundColor="primary" mat-align-tabs="center">
+    <a mat-tab-link *ngFor="let link of links; index as i"
+       [href]="link"
+       (click)="activeLink = link"
+       [active]="activeLink == link"> {{titles[i]}} </a>
+  </nav>
+  &nbsp;
+  <div class="card" style="width:auto; background-color: rgb(221, 235, 236);">
+    <table>
+      <tr>
+        <td>
+          <button class="btn btn-primary  mx-2" (click)="prevPage()">
+            Previous
+          </button>
+            <button class="btn btn-primary  mx-2" (click)="nextPage()"
+              [disabled]="(favoritosList.noticiasResponse.noticias | filtroFavoritos:page:search).length === 0 ">
+              Next
+            </button>
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="Filter Article by title" #txtSearch
+            (keyup)="searchArticle(txtSearch.value)" />
+        </td>
+        <!-- <td>
+        <a [routerLink]="['/home']" class="btn btn-primary  mx-1">Home</a>
+        &nbsp;
+        <a [routerLink]="['/favoritos']" class="btn btn-primary  mx-1">Favorites</a>
+      </td> -->
+      </tr>
+    </table>
+  </div>
+  &nbsp;
+  <div class="card" style="width:auto; align-content: center; background-color: rgb(182, 236, 239);">
+    <table>
+      <tr>
+        <td>
+          <h3 style="font-family: Arial, Helvetica, sans-serif;">Search Saved Favorites</h3>
+        </td>
+        <td>
+          <input type="text" class="form-control mt-1 mb-1" [(ngModel)]="tituloBusqueda"
+            placeholder="Saved article by title">
+        </td>
+        <td>
+          <button class="btn btn-primary mt-1 mb-1" (click)="getFavoritosPorTitulo(tituloBusqueda)">Search</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  &nbsp;
+  <div *ngIf="showFavoritos">
+    <h1 style="font-family: Arial, Helvetica, sans-serif;">Result: </h1>
+    <div class="card" style="width: min-content; align-content: center; background-color: grey;">
+      <div class="card-body">
+        <div *ngFor="let favorito of favoritosPorTitulo.noticiasResponse.noticias">
+          <img [src]="favorito.imageUrl" width="600" height="400" alt="Imagen">
+          <h5 class="card-title"><b style="font-size: medium;">{{favorito.title}}</b></h5>
+          <p class="card-text">{{favorito.summary}}</p>
+          <p class="card-text">Site: {{favorito.newsSite}}</p>
+          <p class="card-text">Saved at: {{favorito.updatedAt | date: 'dd MMM yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  &nbsp;
+  &nbsp;
+  <div *ngFor="let favorito of favoritosList.noticiasResponse.noticias | filtroFavoritos:page:search">
+    <!-- {{favorito | json}} -->
+    <div class="card" style="width: min-content; align-content: center;">
+      <div class="card-body">
+        <img [src]="favorito.imageUrl" width="600" height="400" alt="Imagen">
+        <h5 class="card-title"><b style="font-size: medium;">{{favorito.title}}</b></h5>
+        <p class="card-text">{{favorito.summary}}</p>
+        <p class="card-text">Site: {{favorito.newsSite}}</p>
+        <p class="card-text">Saved at: {{favorito.updatedAt | date: 'dd MMM yyyy'}}</p>
+        <button class="btn btn-primary" (click)="borrarFavorito(favorito)">Delete FF</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--{{favoritosList.noticiasResponse.noticias | json }}-->
